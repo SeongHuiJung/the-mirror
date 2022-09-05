@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour
 
     public static GameObject player;
     public static PlayerControllerScript playerControllerScript;
+    public static DialogManager dialogManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerControllerScript = player.GetComponent<PlayerControllerScript>();
+        dialogManager = FindObjectOfType<DialogManager>();
 
         DontDestroyOnLoad(this.gameObject);
     }

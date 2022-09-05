@@ -22,5 +22,4 @@ public class DialogEvent : MonoBehaviour
         //event body
     }
     
-
 }

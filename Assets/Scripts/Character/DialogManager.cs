@@ -21,8 +21,7 @@ public class DialogManager : MonoBehaviour
 
     CSVReader reader;
 
-    [SerializeField]
-    AutoAction[] autoActions; // Move 및 Scene에 해당하는 부분들
+    public List<AutoAction> autoActions = new List<AutoAction>(); // Move 및 Scene에 해당하는 부분들
 
     GameObject speech_bubble_object;
     GameObject selectedObject;
@@ -46,41 +45,43 @@ public class DialogManager : MonoBehaviour
     void Awake()
     {
         reader = new CSVReader();
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    public void Start()
+    void Start()
     {
         playerControllerScript = GameManager.playerControllerScript;
         renderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    void Update()
     {
         if (isTalkFaster && Input.GetKeyDown("e"))
             textSpeed = 0.01f;
     }
 
-    public void CallDialogByEvent(int _dialogID)
+    void CallDialogByEvent(int _dialogID)
     {
         SetId(_dialogID);
         StartConversation();
     }
 
-    public void CallAutoAction(int actionID)
+    void CallAutoAction(int actionID)
     {
         playerControllerScript.isImpossibleMove = false;
         AutoAction action = autoActions[actionID];
         action.Action();
     }
 
-    public void BuildSpeechBubbleObject()
+    private void BuildSpeechBubbleObject()
     {
-        Vector3 pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + (renderer.sprite.rect.size.y * gameObject.transform.localScale.y / 2 + 50) * axis_celibration, 0); //말풍선 높이 설정
+        Vector3 pos = new Vector3(0, 0, 0);
         Vector3 rot = new Vector3(0, 0, 0);
         speech_bubble_object = Instantiate(speech_bubble_prefab, pos, Quaternion.Euler(rot), null);
     }
-    
-    public void BuildSpeechBubbleObject(GameObject talker)
+
+    private void BuildSpeechBubbleObject(GameObject talker)
     {
         renderer = talker.GetComponent<SpriteRenderer>();
         Vector3 pos = new Vector3(talker.transform.position.x, talker.transform.position.y + (renderer.sprite.rect.size.y * talker.transform.localScale.y / 2 + 50) * axis_celibration, 0); //말풍선 높이 설정
@@ -92,13 +93,11 @@ public class DialogManager : MonoBehaviour
         if (isTalking)
             return;
         isTalking = true;
-        //상호작용 이외의 원인으로도 대화가 시작될수 있으므로 대화중에는 플레이어 정지(어차피 npc는 알아서 멈춰있지 않을까?)
-        if(!playerControllerScript.isImpossibleMove)
-            playerControllerScript.isImpossibleMove = true;
 
-        //말풍선 생성
+        playerControllerScript.isImpossibleMove = true;
+        playerControllerScript.playerAnimationController.SetInteger("state", 0);
+
         BuildSpeechBubbleObject();
-
         //Conversation 코루틴 호출
         if (!isConversationCourintRunning)
             StartCoroutine(Conversation(speech_bubble_object));
@@ -118,7 +117,7 @@ public class DialogManager : MonoBehaviour
         isTalking = false;
     }
 
-    public IEnumerator Conversation(GameObject speech_bubble_object)
+    private IEnumerator Conversation(GameObject speech_bubble_object)
     {
         isConversationCourintRunning = true;
 
@@ -134,7 +133,8 @@ public class DialogManager : MonoBehaviour
         string eventNumber = dialogList[7];
         string script = dialogList[3];
 
-        BuildSpeechBubbleObject(GameObject.FindWithTag(GetCharacter(Convert.ToInt32(dialogList[2])))); //처음 대화 시도 시 dialogmanager가 갖고 있는 오브젝트가 처음에 말을 시작하는 대상이 아닐 경우에 대비(임시방편)
+        BuildSpeechBubbleObject(GameObject.FindWithTag(GetCharacter(Convert.ToInt32(dialogList[2])))); //처음 대화 시도 시
+        
         while (!script.Equals("") && (dialogList[0] == dialogNo || dialogList[0].Equals("100") || preIndex + 1 == index))  //대화 id 달라질 때까지
         {
             dialogNo = dialogList[0];
@@ -213,6 +213,7 @@ public class DialogManager : MonoBehaviour
             if (!eventNumber.Equals(""))
             {
                 Debug.Log(eventNumber);
+                index++;
                 break;
             }
 
@@ -225,10 +226,15 @@ public class DialogManager : MonoBehaviour
             script = dialogList[3];
         }
 
-        if (dialogList[0].Equals("100")) //대사 되돌아가기
-            index = preIndex;
+        id = index + 1;
 
-        if (eventNumber != "")
+        if (dialogList[0].Equals("100"))    //대사 되돌아가기
+        {
+            id = preIndex + 1;
+            index = preIndex;
+        }
+
+        if (!eventNumber.Equals(""))
         {
             Debug.Log(eventNumber);
             int actionID = Convert.ToInt32(eventNumber);
@@ -277,6 +283,16 @@ public class DialogManager : MonoBehaviour
     public void SetId(int _id)
     {
         id = _id;
+    }
+
+    public int GetId()
+    {
+        return id;
+    }
+
+    public void SetPreindex(int _preIndex)
+    {
+        preIndex = _preIndex;
     }
     
     public void DestroyBubble()

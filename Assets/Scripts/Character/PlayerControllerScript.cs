@@ -55,7 +55,7 @@ public class PlayerControllerScript : MoveScript
     }
     public void ProcessInteractEvent()
     {
-        if ( !isImpossibleMove && gameObject.tag == "Player")
+        if (!isImpossibleMove)
         {
             interactManageer.Interact(0);
             playerAnimationController.SetInteger("state", 0);
@@ -66,27 +66,7 @@ public class PlayerControllerScript : MoveScript
     void FixedUpdate()
     {
         if (!isImpossibleMove)
-        {
-            ActiveMove(axisHorizontal, axisVertical, true);
-
-            //rotation
-            /*
-            if(axisHorizontal * axisVertical == 0 || axisHorizontal * previousSpeedX <= 0 || axisHorizontal * previousSpeedX <= 0)
-            {
-                Debug.Log(axisHorizontal);
-                if(axisHorizontal * previousSpeedX <= 0 && axisHorizontal != 0 || (axisVertical == 0 && axisHorizontal != 0))
-                {
-
-                    RotateHorizontal(Convert.ToInt32(axisHorizontal / Mathf.Abs(axisHorizontal)));
-                }
-                if(axisHorizontal * previousSpeedX <= 0 && axisVertical != 0 || (axisHorizontal == 0 && axisVertical != 0))
-                {
-                    RotateVertical(Convert.ToInt32(axisVertical / Mathf.Abs(axisVertical)));
-                }
-                //모두가 0일때는 그냥 플레이어 회전 그대로
-            }
-            */
-        }
+            ActiveMove(axisHorizontal, axisVertical);
     }
 
     private void DistinguishRotate(float axisHorizontal, float axisVertical)

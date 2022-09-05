@@ -46,7 +46,6 @@ public class SelecteMoveScript : MonoBehaviour
             else if (index < maxIndex)
                 ChangePanel(index, ++index);
         }
-         
     }
 
     //override해서 사용하시면 됩니다.
@@ -78,8 +77,7 @@ public class SelecteMoveScript : MonoBehaviour
 
     void AgainButTutorial()
     {
-        //튜토리얼 씬 조건 추가예정
-        DialogManager dialogManager = FindObjectOfType<PlayerControllerScript>().gameObject.GetComponent<DialogManager>();
+        DialogManager dialogManager = GameManager.dialogManager;
         dialogManager.bedSettutorialindex = true;
         dialogManager.isDeleteSelect = true;
     }

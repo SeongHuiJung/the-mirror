@@ -20,11 +20,10 @@ public class DialogEventHandler : MonoBehaviour
             dialogManager = dialogManagerObject.GetComponent<DialogManager>();
         else
             dialogManager = GetComponent<DialogManager>(); //value does not fall in ???
-        eventCallDelegate = dialogManager.CallDialogByEvent;
+        //eventCallDelegate = dialogManager.CallDialogByEvent;
         
         for(int i=0; i<dialogEvents.Length; i++)
         {
-
             dialogEvents[i].InitEvent(eventCallDelegate);
         }
         
