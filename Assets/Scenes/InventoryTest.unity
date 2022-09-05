@@ -969,6 +969,7 @@ GameObject:
   - component: {fileID: 1612122934}
   - component: {fileID: 1612122933}
   - component: {fileID: 1612122932}
+  - component: {fileID: 1612122935}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1075,6 +1076,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1612122935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612122930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788f7a002ebc1e04394d01817c4a7869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {x: 5, y: 5, z: 0}
+  remainTime: 1
+  moveTime: 1
 --- !u!1 &1842855400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,14 +1203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19d53bef81ff11479e0bdce3305dd87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 15
+  id: 21
   index: 0
   Characterid: 
   speech_bubble_prefab: {fileID: 8637874343786693755, guid: 5651e3f4208cf4f478a178d5599da600, type: 3}
   selected_Prefab: {fileID: 4514419884897556353, guid: 54de27e952442454d83971af2e68be60, type: 3}
   autoActions:
   - {fileID: 168253167}
-  - {fileID: 0}
+  - {fileID: 1612122935}
   bedSettutorialindex: 0
   isDeleteSelect: 0
 --- !u!1001 &7472316324068795122

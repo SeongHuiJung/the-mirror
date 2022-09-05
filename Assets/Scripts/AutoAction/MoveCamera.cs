@@ -15,6 +15,7 @@ public class MoveCamera : AutoAction
     Vector3 cameraPosition;
     Vector3 dirVector; //º¤ÅÍ
     bool isMoving = false;
+
     public override void Action()
     {
         Debug.Log("¾å");
@@ -36,7 +37,6 @@ public class MoveCamera : AutoAction
         Debug.Log(d);
         while (tmpDistance < d)
         {
-            
             float dt = Time.deltaTime;
             target.transform.position += dir / moveTime * dt;
             Debug.Log(dir);
