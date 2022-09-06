@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class IsPlayerInSightEvent : MonoBehaviour
+public class IsPlayerInSightEvent : InteractObjectScript
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-            GameManager.dialogManager.StartConversation();
+            Interact();
+    }
+
+    public override void Interact()
+    {
+        GameManager.dialogManager.StartConversation();
     }
 }

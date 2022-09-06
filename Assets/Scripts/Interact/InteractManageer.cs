@@ -18,18 +18,25 @@ public class InteractManageer : MonoBehaviour
         InteractObjectScript interactObjectScript = otherObject.GetComponent<InteractObjectScript>();
         if (interactObjectScript != null)
         {
-            DialogManager dialogManager = GameManager.dialogManager;
-            dialogManager.SetPreindex(dialogManager.GetId());
-            dialogManager.SetId(interactObjectScript.GetId());
-
-            switch (id)
+            if (interactObjectScript.GetDialog())
             {
-                case 0:
-                    GameManager.dialogManager.StartConversation();
-                    break;
-                case 1:
-                    GameManager.dialogManager.EndConversation();
-                    break;
+                DialogManager dialogManager = GameManager.dialogManager;
+                dialogManager.SetPreindex(dialogManager.GetId());
+                dialogManager.SetId(interactObjectScript.GetId());
+
+                switch (id)
+                {
+                    case 0:
+                        GameManager.dialogManager.StartConversation();
+                        break;
+                    case 1:
+                        GameManager.dialogManager.EndConversation();
+                        break;
+                }
+            }
+            else
+            {
+                interactObjectScript.Interact();
             }
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class SelecteMoveScript : MonoBehaviour
+public abstract class SelecteMoveScript : MonoBehaviour
 {
     public int index;
     public List<Image> panelList;

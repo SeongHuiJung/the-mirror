@@ -131,7 +131,5 @@ public class MoveScript : MonoBehaviour
             else
                 playerState = 1;
         }
-
-        Debug.Log(playerState);
     }
 }
