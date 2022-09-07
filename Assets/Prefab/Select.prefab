@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4514419884897556364}
   - component: {fileID: 4514419884897556367}
   - component: {fileID: 4514419884897556366}
-  - component: {fileID: 8399740415602710596}
+  - component: {fileID: 1321263264675117362}
+  - component: {fileID: 7384493812234367810}
   m_Layer: 5
-  m_Name: SleepSelected
+  m_Name: Select
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4514419884897556366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,7 +104,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8399740415602710596
+--- !u!114 &1321263264675117362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,23 +113,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4514419884897556353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9baa463f7835c1444bf82f0fd41f0b1f, type: 3}
+  m_Script: {fileID: 11500000, guid: 407ea88c0fd053d42af4e7265fa8ec72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  panelList:
-  - {fileID: 0}
-  - {fileID: 0}
+  maxindex: 1
+  impossibleindex: 0
+  panelList: []
   currentImageList: []
   selectedImageList: []
   unSelectedImageList: []
-  unselectedImage: {fileID: 0}
-  selectedImage: {fileID: 0}
-  dayImage_prefab: {fileID: 8865188753636961468, guid: 9a9bb34db1f60034c93978c0c0a62126, type: 3}
-  dayImageList:
-  - {fileID: 21300000, guid: c92acf432a5b56040bdc8cf5adb4756e, type: 3}
-  - {fileID: 21300000, guid: bacdca68e63d149468e07862cad426f1, type: 3}
-  impossibleindex: 0
+--- !u!114 &7384493812234367810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4514419884897556353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e868392df27f95e498e68fa936d134d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4514419885315923533
 GameObject:
   m_ObjectHideFlags: 0

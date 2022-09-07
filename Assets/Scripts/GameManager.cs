@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour
         playerControllerScript = player.GetComponent<PlayerControllerScript>();
         dialogManager = FindObjectOfType<DialogManager>();
 
-        DontDestroyOnLoad(this.gameObject);
+        SelecteMoveScript.impossibleindex = -1;
+
+        DontDestroyOnLoad(this.gameObject.transform.parent);
     }
 
     void Update()

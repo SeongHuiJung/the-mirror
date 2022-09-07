@@ -4,30 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class SleepManager : SelecteMoveScript
+public class SleepManager : MonoBehaviour
 {
     public GameObject dayImage_prefab;
     GameObject today;
 
     public List<Sprite> dayImageList;
 
-    public int impossibleindex;
-
     DialogManager dialogManager;
+    SelecteMoveScript selecteMoveScript;
 
-    private void Awake()
+    public void ActivateSleep()
     {
-        dialogManager = GameManager.player.GetComponent<DialogManager>();
+        dialogManager = GameManager.dialogManager;
+        selecteMoveScript = FindObjectOfType<SelecteMoveScript>();
 
-        selectActionList = new List<Action>();
-        selectActionList.Add(YesSleep);
-        selectActionList.Add(NoSleep);
-    }
-
-    void Update()
-    {
-        Move(1);
-        Select();
+        selecteMoveScript.selectActionList = new List<Action>();
+        selecteMoveScript.selectActionList.Add(YesSleep);
+        selecteMoveScript.selectActionList.Add(NoSleep);
+        selecteMoveScript.maxindex = 1;
     }
 
     void YesSleep()
@@ -69,6 +64,5 @@ public class SleepManager : SelecteMoveScript
         yield return new WaitForSecondsRealtime(1f);
 
         Destroy(today);
-        Destroy(this.gameObject);
     }
 }

@@ -33,6 +33,7 @@ public class DialogManager : MonoBehaviour
     bool isTalkFaster = false;
     public bool bedSettutorialindex;
     public bool isDeleteSelect;
+    public bool isImpossiblenext;
 
     const float bubbleContentHeight = 40; //말풍선 텍스트 부분 가로크기
     const float bubbleHeight = 60; //말풍선 세로 크기
@@ -45,8 +46,6 @@ public class DialogManager : MonoBehaviour
     void Awake()
     {
         reader = new CSVReader();
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
@@ -184,9 +183,6 @@ public class DialogManager : MonoBehaviour
                 //말풍선 이미지 크기 추가예정
                 selectedObject = Instantiate(selected_Prefab, new Vector3(rectTransform.position.x + rectTransform.sizeDelta.x / 2 + 1f, speech_bubble_object.transform.position.y + 0.1f, 0), Quaternion.identity);
 
-                if (!dialogList[5].Equals("")) // 선택지 불가 기능
-                    selectedObject.GetComponent<SleepManager>().impossibleindex = Convert.ToInt32(dialogList[5]);
-
                 for (int i = 0; i < selectDialog.Length; i++)
                 {
                     selectedObject.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta = new Vector2((maxlength - 40) * axis_celibration, 0.3f);
@@ -194,10 +190,13 @@ public class DialogManager : MonoBehaviour
                 }
             }
 
+            if (!dialogList[5].Equals("")) // 선택지 불가 기능
+                SelecteMoveScript.impossibleindex = Convert.ToInt32(dialogList[5]);
+
             yield return new WaitForSeconds(0.5f); //대사 2개 한번에 넘어가는거 방지
-            while (!Input.GetKeyDown(KeyCode.E) && !Input.GetKeyDown(KeyCode.Return)) //버튼 눌릴때까지 기다림
+            while (isImpossiblenext || (!Input.GetKeyDown(KeyCode.E) && !Input.GetKeyDown(KeyCode.Return))) //버튼 눌릴때까지 기다림
             {
-                yield return new WaitForSeconds(Time.deltaTime);
+                yield return new WaitForSeconds(Time.deltaTime * 1.05f);
             }
 
             TutorialBed();
@@ -226,6 +225,7 @@ public class DialogManager : MonoBehaviour
             script = dialogList[3];
         }
 
+        SelecteMoveScript.impossibleindex = -1;
         id = index + 1;
 
         if (dialogList[0].Equals("100"))    //대사 되돌아가기
@@ -288,6 +288,11 @@ public class DialogManager : MonoBehaviour
     public int GetId()
     {
         return id;
+    }
+
+    public int GetIndex()
+    {
+        return index;
     }
 
     public void SetPreindex(int _preIndex)

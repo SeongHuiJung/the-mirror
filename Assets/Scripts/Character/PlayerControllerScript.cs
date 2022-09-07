@@ -59,7 +59,6 @@ public class PlayerControllerScript : MoveScript
         {
             interactManageer.Interact(0);
             playerAnimationController.SetInteger("state", 0);
-            isImpossibleMove = true;
         }
     }
 

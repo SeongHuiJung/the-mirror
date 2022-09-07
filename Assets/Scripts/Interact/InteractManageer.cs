@@ -27,15 +27,17 @@ public class InteractManageer : MonoBehaviour
                 switch (id)
                 {
                     case 0:
-                        GameManager.dialogManager.StartConversation();
+                        dialogManager.StartConversation();
                         break;
                     case 1:
-                        GameManager.dialogManager.EndConversation();
+                        dialogManager.EndConversation();
                         break;
                 }
             }
             else
             {
+                if (otherObject.tag.Equals("Bed"))
+                    otherObject.GetComponent<SleepManager>().ActivateSleep();
                 interactObjectScript.Interact();
             }
         }

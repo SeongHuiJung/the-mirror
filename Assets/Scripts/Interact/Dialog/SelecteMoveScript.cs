@@ -3,29 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Net;
 
-public abstract class SelecteMoveScript : MonoBehaviour
+public class SelecteMoveScript : MonoBehaviour
 {
-    public int index;
-    public List<Image> panelList;
+    [SerializeField] protected int index ;
+    public int maxindex;
+    public static int impossibleindex;
 
-    public List<Sprite> currentImageList;
-    public List<Sprite> selectedImageList;
-    public List<Sprite> unSelectedImageList;
-    public Image unselectedImage, selectedImage;
+    [SerializeField] protected List<Image> panelList;
+    [SerializeField] protected List<Sprite> currentImageList;
+    [SerializeField] protected List<Sprite> selectedImageList;
+    [SerializeField] protected List<Sprite> unSelectedImageList;
 
     public List<Action> selectActionList;
 
-    public void Start()
+    DialogManager dialogManager;
+
+    private void Awake()
     {
+        dialogManager = GameManager.dialogManager;
+
         index = -1;
+        maxindex = 1;
+    }
+
+    protected void Update()
+    {
+        Move(1);
+        Select();
     }
 
     //override
     public virtual void Move(int maxIndex)
     {
-        
-         if (Input.GetKeyDown("w"))
+        if (Input.GetKeyDown("w"))
         {
             if (index == -1)
             {
@@ -43,7 +55,7 @@ public abstract class SelecteMoveScript : MonoBehaviour
                 index = 0;
                 //ChangePanel(index, index);
             }
-            else if (index < maxIndex)
+            else if (index < maxindex)
                 ChangePanel(index, ++index);
         }
     }
@@ -54,10 +66,21 @@ public abstract class SelecteMoveScript : MonoBehaviour
         if (Input.GetKeyDown("e") || Input.GetKeyDown(KeyCode.Return))  // e, enter 입력 가이드입니다.
         {
             //튜토리얼 조건 추가 예정
-            if (index == -1)
-                AgainButTutorial();
-            else
-                selectActionList[index]();
+            if (index == impossibleindex)
+            {
+                dialogManager.isImpossiblenext = true;
+                return;
+            }
+            else {
+                dialogManager.isImpossiblenext = false;
+
+                if (index == -1)
+                    AgainButTutorial();
+                else
+                    selectActionList[index]();
+
+                Destroy(this.gameObject);
+            }
         }
     }
 

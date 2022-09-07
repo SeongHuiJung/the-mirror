@@ -11,11 +11,12 @@ public class SelectButton : SelecteMoveScript
     public GameObject quitAnim;
     public Animator startingAnim;
     // Update is called once per frame
-    void Update()
+
+    private void Start()
     {
-        Move(2);
-        Select();
+        maxindex = 2;
     }
+
     public override void Move(int maxIndex)
     {
         if (Input.GetKeyDown("w"))
