@@ -46,6 +46,7 @@ public class DialogManager : MonoBehaviour
     void Awake()
     {
         reader = new CSVReader();
+        SelecteMoveScript.impossibleindex = -2;
     }
 
     void Start()
@@ -225,12 +226,12 @@ public class DialogManager : MonoBehaviour
             script = dialogList[3];
         }
 
-        SelecteMoveScript.impossibleindex = -1;
+        SelecteMoveScript.impossibleindex = -2;
         id = index + 1;
 
         if (dialogList[0].Equals("100"))    //대사 되돌아가기
         {
-            id = preIndex + 1;
+            id = preIndex;
             index = preIndex;
         }
 

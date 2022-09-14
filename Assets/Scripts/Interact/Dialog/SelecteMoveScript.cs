@@ -7,7 +7,7 @@ using System.Net;
 
 public class SelecteMoveScript : MonoBehaviour
 {
-    [SerializeField] protected int index ;
+    [SerializeField] protected int index;
     public int maxindex;
     public static int impossibleindex;
 
